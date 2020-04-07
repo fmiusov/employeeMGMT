@@ -176,7 +176,7 @@ function addRole() {
         message: "What is the salary for this role?",
       },
       {
-        name: "department_id",
+        name: "departmentId",
         type: "input",
         message:
           "What is the numerical department id?",
@@ -184,19 +184,18 @@ function addRole() {
     ])
     .then(function (answer) {
       let query =
-        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);";
+        "INSERT INTO jobrole (title, salary, department_id) VALUES (?, ?, ?);";
       connection.query(
         query,
         [
-          answer.firstName,
-          answer.lastName,
-          answer.roleId,
-          answer.managerId
+          answer.title,
+          answer.salary,
+          answer.departmentId
         ],
         function (err, res) {
           if (err) throw err;
           console.log(
-            `Employee ${answer.firstName} ${answer.lastName} has been added!`
+            `Job role ${answer.title} has been added with a salary of ${answer.salary}!`
           );
         }
       );
