@@ -29,15 +29,13 @@ function runMGMT() {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View All Employees by Department",
-        // "View All Employees by Manager",
-        "Add Employee",
-        // "Remove Employee",
-        "Update Employee Role",
-        // "Update Employee Manager",
+        "View All Departments",
         "View All Roles",
+        "View All Employees by Department",
+        "Add Department",
+        "Add Employee",
         "Add Role",
-        // "Remove Role",
+        "Update Employee Role",
         "EXIT",
       ],
     })
@@ -47,40 +45,48 @@ function runMGMT() {
           allEmployees();
           break;
 
+        case "View All Departments":
+          allDepartments();
+          break;
+
+        case "View All Roles":
+          allRoles();
+          break;
+
         case "View All Employees by Department":
           allEmployeesDepartments();
           break;
 
-        // case "View All Employees by Manager":
-        //   allEmployeesManager();
-        //   break;
+        case "Add Department":
+          addDepartment();
+          break;
 
         case "Add Employee":
           addEmployee();
-          break;
-
-        // case "Remove Employee":
-        //   removeEmployee();
-        //   break;
-
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break;
-
-        // case "Update Employee Manager":
-        //   updateEmployeeManager();
-        //   break;
-
-        case "View All Roles":
-          allRoles();
           break;
 
         case "Add Role":
           addRole();
           break;
 
+        case "Update Employee Role":
+          updateEmployeeRole();
+          break;
+
+        // case "Remove Employee":
+        //   removeEmployee();
+        //   break;
+
         // case "Remove Role":
         //   removeRole();
+        //   break;
+
+        // case "Remove Department":
+        //   removeDepartment();
+        //   break;
+
+        // case "Update Employee Manager":
+        //   updateEmployeeManager();
         //   break;
 
         case "Exit":
@@ -129,6 +135,43 @@ function allRoles() {
       console.log(`${res[i].id} ${res[i].title} .......  ${res[i].salary}`);
     }
   });
+}
+
+function allDepartments() {
+  let query = "SELECT * FROM department;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    console.log("#  DEPARTMENT");
+    console.log("==============================");
+    for (let i = 0; i < res.length; i++) {
+      console.log(`${res[i].id} ${res[i].name}`);
+    }
+  });
+}
+
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "departmentName",
+        type: "input",
+        message: "What is the name of the new department?",
+      }
+    ])
+    .then(function (answer) {
+      let query =
+        "INSERT INTO department (name) VALUES (?);";
+      connection.query(
+        query,
+        [answer.departmentName],
+        function (err, res) {
+          if (err) throw err;
+          console.log(
+            `New department ${answer.departmentName} has been added!`
+          );
+        }
+      );
+    });
 }
 
 function addEmployee() {
@@ -219,21 +262,19 @@ function updateEmployeeRole() {
         name: "roleId",
         type: "input",
         message: "What is their new role id #?",
-      }
+      },
     ])
     .then(function (answer) {
-      let query =
-        "UPDATE employee SET role_id = ? WHERE id = ?;";
-      connection.query(
-        query,
-        [answer.employeeId, answer.roleId],
-        function (err, res) {
-          if (err) throw err;
-          console.log(
-            `Employee # ${answer.employeeId} has been given the new role id of ${answer.roleId}!`
-          );
-        }
-      );
+      let query = "UPDATE employee SET role_id = ? WHERE id = ?;";
+      connection.query(query, [answer.employeeId, answer.roleId], function (
+        err,
+        res
+      ) {
+        if (err) throw err;
+        console.log(
+          `Employee # ${answer.employeeId} has been given the new role id of ${answer.roleId}!`
+        );
+      });
     });
 }
 

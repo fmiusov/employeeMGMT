@@ -25,17 +25,26 @@ CREATE TABLE department (
   name VARCHAR(30) NULL,
   PRIMARY KEY (id)
 );
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Justin", "Roiland", 1, 1);
+INSERT INTO department (name)
+VALUES ("Production");
+
+INSERT INTO department (name)
+VALUES ("Voice Acting");
+
+INSERT INTO department (name)
+VALUES ("Writing");
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Dan", "Harmon", 2, 1);
+VALUES ("Justin", "Roiland", 2, 1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Kassir", 1, 1);
+VALUES ("Dan", "Harmon", 3, 1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Mike", "Lazzo", 3, 1);
+VALUES ("John", "Kassir", 2, 1);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Mike", "Lazzo", 1, 1);
 
 INSERT INTO jobrole (title, salary, department_id)
 VALUES ("Voice Actor", "100000.00", 2);
@@ -49,3 +58,11 @@ VALUES ("Producer", "500000.00", 1);
 SELECT * FROM employee;
 SELECT * FROM jobrole;
 SELECT * FROM department;
+
+SELECT * 
+FROM employee INNER JOIN department 
+ON employee.role_id = department.id;
+
+UPDATE employee
+SET role_id = '2'
+WHERE id = 1;
