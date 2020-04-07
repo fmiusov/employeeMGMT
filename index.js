@@ -96,22 +96,25 @@ function allEmployees() {
   let query = "SELECT * FROM employee;";
   connection.query(query, function (err, res) {
     if (err) throw err;
-    console.log("FIRST NAME   ||   LAST NAME");
+    console.log("# || FIRST NAME || LAST NAME");
     console.log("==============================");
     for (let i = 0; i < res.length; i++) {
-      console.log(res[i].first_name, res[i].last_name);
+      console.log(res[i].id, res[i].first_name, res[i].last_name);
     }
   });
 }
 
 function allEmployeesDepartments() {
-  let query = "SELECT * FROM employee INNER JOIN department ON employee.role_id = department.id;";
+  let query =
+    "SELECT * FROM employee INNER JOIN department ON employee.role_id = department.id;";
   connection.query(query, function (err, res) {
     if (err) throw err;
     console.log("EMPLOYEE  ||   DEPARTMENT");
     console.log("==============================");
     for (let i = 0; i < res.length; i++) {
-      console.log(`${res[i].first_name} ${res[i].last_name}.......  ${res[i].name}`);
+      console.log(
+        `${res[i].first_name} ${res[i].last_name}.......  ${res[i].name}`
+      );
     }
   });
 }
@@ -120,10 +123,10 @@ function allRoles() {
   let query = "SELECT * FROM jobrole;";
   connection.query(query, function (err, res) {
     if (err) throw err;
-    console.log("ROLE         ||   SALARY");
+    console.log("#  ROLE         ||   SALARY");
     console.log("==============================");
     for (let i = 0; i < res.length; i++) {
-      console.log(`${res[i].title} .......  ${res[i].salary}`);
+      console.log(`${res[i].id} ${res[i].title} .......  ${res[i].salary}`);
     }
   });
 }
@@ -151,19 +154,14 @@ function addEmployee() {
         name: "managerId",
         type: "input",
         message: "What is the employees numerical manager id?",
-      }
+      },
     ])
     .then(function (answer) {
       let query =
         "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);";
       connection.query(
         query,
-        [
-          answer.firstName,
-          answer.lastName,
-          answer.roleId,
-          answer.managerId
-        ],
+        [answer.firstName, answer.lastName, answer.roleId, answer.managerId],
         function (err, res) {
           if (err) throw err;
           console.log(
@@ -190,20 +188,15 @@ function addRole() {
       {
         name: "departmentId",
         type: "input",
-        message:
-          "What is the numerical department id?",
-      }
+        message: "What is the numerical department id?",
+      },
     ])
     .then(function (answer) {
       let query =
         "INSERT INTO jobrole (title, salary, department_id) VALUES (?, ?, ?);";
       connection.query(
         query,
-        [
-          answer.title,
-          answer.salary,
-          answer.departmentId
-        ],
+        [answer.title, answer.salary, answer.departmentId],
         function (err, res) {
           if (err) throw err;
           console.log(
@@ -214,7 +207,35 @@ function addRole() {
     });
 }
 
-
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        name: "employeeId",
+        type: "input",
+        message: "What is the employee's id #?",
+      },
+      {
+        name: "roleId",
+        type: "input",
+        message: "What is their new role id #?",
+      }
+    ])
+    .then(function (answer) {
+      let query =
+        "UPDATE employee SET role_id = ? WHERE id = ?;";
+      connection.query(
+        query,
+        [answer.employeeId, answer.roleId],
+        function (err, res) {
+          if (err) throw err;
+          console.log(
+            `Employee # ${answer.employeeId} has been given the new role id of ${answer.roleId}!`
+          );
+        }
+      );
+    });
+}
 
 function goBack() {
   inquirer
