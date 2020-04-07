@@ -14,11 +14,11 @@ https://github.com/fmiusov/employeeMGMT
 
 # GALLERY:
 
-![ascii art](/images/asciss.PNG "Logo Title Text ")
+![ascii art](/images/asciiss.PNG "Logo Title Text ")
 
 ![adding department](/images/addDss.PNG "Adding Department")
 
-![adding employee](/images/addEmployee.PNG "Adding Employee")
+![adding employee](/images/addEmployeess.PNG "Adding Employee")
 
 ![all departments](/images/allDss.PNG "All Departments")
 
