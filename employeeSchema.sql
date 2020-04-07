@@ -25,6 +25,14 @@ CREATE TABLE department (
   name VARCHAR(30) NULL,
   PRIMARY KEY (id)
 );
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Justin", "Roiland", 1, 1);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Dan", "Harmon", 2, 1);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Kassir", 1, 1);
 
 SELECT * FROM employee;
 SELECT * FROM jobrole;

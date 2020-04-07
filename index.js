@@ -1,5 +1,8 @@
+// CONNECTIONS AND DEPENDENCIES ===========================================================
+
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const cTable = require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -16,6 +19,8 @@ connection.connect(function (err) {
   runMGMT();
 });
 
+// MAIN MENU ==============================================================================
+
 function runMGMT() {
   inquirer
     .prompt({
@@ -25,14 +30,14 @@ function runMGMT() {
       choices: [
         "View All Employees",
         "View All Employees by Department",
-        "View All Employees by Manager",
+        // "View All Employees by Manager",
         "Add Employee",
-        "Remove Employee",
+        // "Remove Employee",
         "Update Employee Role",
-        "Update Employee Manager",
+        // "Update Employee Manager",
         "View All Roles",
         "Add Role",
-        "Remove Role",
+        // "Remove Role",
         "EXIT",
       ],
     })
@@ -46,25 +51,25 @@ function runMGMT() {
           allEmployeesDepartments();
           break;
 
-        case "View All Employees by Manager":
-          allEmployeesManager();
-          break;
+        // case "View All Employees by Manager":
+        //   allEmployeesManager();
+        //   break;
 
         case "Add Employee":
           addEmployee();
           break;
 
-        case "Remove Employee":
-          removeEmployee();
-          break;
+        // case "Remove Employee":
+        //   removeEmployee();
+        //   break;
 
         case "Update Employee Role":
           updateEmployeeRole();
           break;
 
-        case "Update Employee Manager":
-          updateEmployeeManager();
-          break;
+        // case "Update Employee Manager":
+        //   updateEmployeeManager();
+        //   break;
 
         case "View All Roles":
           allRoles();
@@ -74,13 +79,26 @@ function runMGMT() {
           addRole();
           break;
 
-        case "Remove Role":
-          removeRole();
-          break;
+        // case "Remove Role":
+        //   removeRole();
+        //   break;
 
         case "Exit":
           connection.end();
           break;
       }
     });
+}
+
+// MENU FUNCTIONS ===========================================================================
+
+function allEmployees() {
+  let query = "SELECT * FROM employee;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      var values = [[res[i].first_name, res[i].last_name]];
+      console.table(["First Name", "Last Name"], values);
+    }
+  });
 }
