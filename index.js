@@ -96,9 +96,131 @@ function allEmployees() {
   let query = "SELECT * FROM employee;";
   connection.query(query, function (err, res) {
     if (err) throw err;
+    console.log("FIRST NAME   ||   LAST NAME");
+    console.log("==============================");
     for (let i = 0; i < res.length; i++) {
-      var values = [[res[i].first_name, res[i].last_name]];
-      console.table(["First Name", "Last Name"], values);
+      console.log(res[i].first_name, res[i].last_name);
     }
   });
+}
+
+function allRoles() {
+  let query = "SELECT * FROM jobrole;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    console.log("ROLE         ||   SALARY");
+    console.log("==============================");
+    for (let i = 0; i < res.length; i++) {
+      console.log(`${res[i].title} .......  ${res[i].salary}`);
+    }
+  });
+}
+
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "firstName",
+        type: "input",
+        message: "What is the employees first name?",
+      },
+      {
+        name: "lastName",
+        type: "input",
+        message: "What is the employees last name?",
+      },
+      {
+        name: "roleId",
+        type: "input",
+        message:
+          "What is the employees numerical role id ( 1: Voice Actor, 2: Writer, 3: Producer )?",
+      },
+      {
+        name: "managerId",
+        type: "input",
+        message: "What is the employees numerical manager id?",
+      }
+    ])
+    .then(function (answer) {
+      let query =
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);";
+      connection.query(
+        query,
+        [
+          answer.firstName,
+          answer.lastName,
+          answer.roleId,
+          answer.managerId
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.log(
+            `Employee ${answer.firstName} ${answer.lastName} has been added!`
+          );
+        }
+      );
+    });
+}
+
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        name: "title",
+        type: "input",
+        message: "What is the title of this job role?",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "What is the salary for this role?",
+      },
+      {
+        name: "department_id",
+        type: "input",
+        message:
+          "What is the numerical department id?",
+      }
+    ])
+    .then(function (answer) {
+      let query =
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);";
+      connection.query(
+        query,
+        [
+          answer.firstName,
+          answer.lastName,
+          answer.roleId,
+          answer.managerId
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.log(
+            `Employee ${answer.firstName} ${answer.lastName} has been added!`
+          );
+        }
+      );
+    });
+}
+
+
+
+function goBack() {
+  inquirer
+    .prompt({
+      name: "goback",
+      type: "list",
+      message: "Now What?",
+      choices: ["Main Menu", "Quit"],
+    })
+    .then(function (answer) {
+      switch (answer.goback) {
+        case "Main Menu":
+          runMGMT();
+          break;
+        case "Quit":
+          connection.end();
+          break;
+      }
+    });
 }

@@ -15,7 +15,7 @@ CREATE TABLE employee (
 CREATE TABLE jobrole (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(30) NULL,
-  salary DECIMAL(7,2) NULL,
+  salary DECIMAL(9,2) NULL,
   department_id INT NULL,
   PRIMARY KEY (id)
 );
@@ -33,6 +33,18 @@ VALUES ("Dan", "Harmon", 2, 1);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("John", "Kassir", 1, 1);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Mike", "Lazzo", 3, 1);
+
+INSERT INTO jobrole (title, salary, department_id)
+VALUES ("Voice Actor", "100000.00", 2);
+
+INSERT INTO jobrole (title, salary, department_id)
+VALUES ("Writer", "80000.00", 3);
+
+INSERT INTO jobrole (title, salary, department_id)
+VALUES ("Producer", "500000.00", 1);
 
 SELECT * FROM employee;
 SELECT * FROM jobrole;
