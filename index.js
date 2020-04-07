@@ -104,6 +104,18 @@ function allEmployees() {
   });
 }
 
+function allEmployeesDepartments() {
+  let query = "SELECT * FROM employee INNER JOIN department ON employee.role_id = department.id;";
+  connection.query(query, function (err, res) {
+    if (err) throw err;
+    console.log("EMPLOYEE  ||   DEPARTMENT");
+    console.log("==============================");
+    for (let i = 0; i < res.length; i++) {
+      console.log(`${res[i].first_name} ${res[i].last_name}.......  ${res[i].name}`);
+    }
+  });
+}
+
 function allRoles() {
   let query = "SELECT * FROM jobrole;";
   connection.query(query, function (err, res) {
