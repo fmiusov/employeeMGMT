@@ -2,7 +2,8 @@
 
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const cTable = require("console.table");
+const logo = require('asciiart-logo');
+const config = require('./package.json');
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -22,6 +23,22 @@ connection.connect(function (err) {
 // MAIN MENU ==============================================================================
 
 function runMGMT() {
+  console.log(
+    logo({
+        name: 'MGMT',
+        font: 'Alpha',
+        lineChars: 4,
+        padding: 2,
+        margin: 3,
+        borderColor: 'grey',
+        logoColor: 'bold-red',
+        textColor: 'red',
+    })
+    .emptyLine()
+    .right('version 1.0.001')
+    .emptyLine()
+    .render()
+);
   inquirer
     .prompt({
       name: "action",
